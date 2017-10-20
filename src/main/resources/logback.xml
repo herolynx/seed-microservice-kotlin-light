@@ -8,10 +8,10 @@
         </encoder>
     </appender>
 
-    <logger name="logging.level.root" level="OFF"/>
-    <logger name="com.herolynx.service" level="OFF"/>
+    <logger name="logging.level.root" level="ERROR"/>
+    <logger name="com.herolynx.service" level="INFO"/>
 
-    <root level="OFF">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 
