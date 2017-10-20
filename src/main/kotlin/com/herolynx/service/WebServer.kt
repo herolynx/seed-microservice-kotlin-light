@@ -4,6 +4,7 @@ import com.herolynx.service.conversions.ObjectMapperProvider
 import com.herolynx.service.monitoring.info
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.ServletContextHandler
+import org.eclipse.jetty.servlet.ServletHolder
 import org.glassfish.jersey.jackson.JacksonFeature
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
@@ -14,33 +15,36 @@ internal class WebServer {
 
     @Throws(Exception::class)
     fun start(port: Int = 8080) {
-        info("*********** ")
         val pkgName = javaClass.`package`.name;
         info("Starting web server - port: $port, root package: $pkgName")
-
-        val servletContextHandler = ServletContextHandler(ServletContextHandler.NO_SESSIONS)
-
-        val jettyServer = Server(port)
-        jettyServer.handler = servletContextHandler
-
-        val rc = ResourceConfig()
+        val serverConfig = ResourceConfig()
                 .register(JacksonFeature::class.java)
                 .register(ObjectMapperProvider::class.java)
+                .packages(pkgName)
+        val servletHolder = createServletHolder(serverConfig)
+        jettyServer = startServer(servletHolder, port)
+    }
 
-        val jerseyServletHolder = servletContextHandler.addServlet(ServletContainer::class.java, "/*")
-        jerseyServletHolder.initOrder = 0
-
-        val jerseyServletParams = mutableMapOf<String, String>()
-        jerseyServletParams.put("jersey.config.server.provider.packages", pkgName)
-
-        jerseyServletHolder.initParameters = jerseyServletParams
-
+    private fun startServer(servletHolder: ServletHolder, port: Int): Server {
+        val servletContextHandler = ServletContextHandler(ServletContextHandler.NO_SESSIONS)
+        servletContextHandler.addServlet(servletHolder, "/*")
+        val jettyServer = Server(port)
+        jettyServer.handler = servletContextHandler
         jettyServer.start()
+        jettyServer.join()
+        return jettyServer
+    }
 
+    private fun createServletHolder(serverConfig: ResourceConfig): ServletHolder {
+        val servletContainer = ServletContainer(serverConfig)
+        val servletHolder = ServletHolder(servletContainer)
+        servletHolder.initOrder = 0
+        return servletHolder
     }
 
     @Throws(Exception::class)
     fun stop() {
+        info("Stoppping web server")
         jettyServer?.stop()
     }
 
