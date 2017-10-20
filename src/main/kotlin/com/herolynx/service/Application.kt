@@ -4,29 +4,26 @@ import com.herolynx.service.monitoring.ProbesRestService
 
 object Application {
 
+    private fun consoleOut(msg: String) {
+        System.out.println("********************************************")
+        System.out.println("********    $msg")
+        System.out.println("********************************************")
+    }
+
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
-        System.out.println("********************************************")
-        System.out.println("********    Starting web service    ********")
-        System.out.println("********************************************")
+        consoleOut("Starting web service")
         val webServer = WebServer()
         val port = 8080
-        webServer.start(
-                port = port,
-                restControllers = arrayOf(
-                        ProbesRestService()
-                )
-        )
+        webServer.start(port = port)
         addShutdownHook(webServer)
     }
 
     internal fun addShutdownHook(webService: WebServer) {
         Runtime.getRuntime().addShutdownHook(Thread {
             try {
-                System.out.println("********************************************")
-                System.out.println("********    Stopping web service    ********")
-                System.out.println("********************************************")
+                consoleOut("Stopping web service")
                 webService.stop()
             } catch (e: Exception) {
                 // ignored

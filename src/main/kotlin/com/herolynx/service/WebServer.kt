@@ -13,9 +13,10 @@ internal class WebServer {
     private var jettyServer: Server? = null
 
     @Throws(Exception::class)
-    fun start(port: Int = 8080, vararg restControllers: Any = arrayOf()) {
+    fun start(port: Int = 8080) {
         info("*********** ")
-        info("Starting web server - port: $port, controllers: ${restControllers.map { c -> c.javaClass.name }.reduce { s1, s2 -> "$s1,$s2" }}")
+        val pkgName = javaClass.`package`.name;
+        info("Starting web server - port: $port, root package: $pkgName")
 
         val servletContextHandler = ServletContextHandler(ServletContextHandler.NO_SESSIONS)
 
@@ -25,13 +26,12 @@ internal class WebServer {
         val rc = ResourceConfig()
                 .register(JacksonFeature::class.java)
                 .register(ObjectMapperProvider::class.java)
-        restControllers.forEach { c -> rc.register(c) }
 
         val jerseyServletHolder = servletContextHandler.addServlet(ServletContainer::class.java, "/*")
         jerseyServletHolder.initOrder = 0
 
         val jerseyServletParams = mutableMapOf<String, String>()
-        jerseyServletParams.put("jersey.config.server.provider.packages", javaClass.`package`.name)
+        jerseyServletParams.put("jersey.config.server.provider.packages", pkgName)
 
         jerseyServletHolder.initParameters = jerseyServletParams
 
