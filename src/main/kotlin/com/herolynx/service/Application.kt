@@ -1,6 +1,6 @@
 package com.herolynx.service
 
-import com.herolynx.service.monitoring.HealthProbesRestService
+import com.herolynx.service.monitoring.ProbesRestService
 
 object Application {
 
@@ -15,7 +15,7 @@ object Application {
         webServer.start(
                 port = port,
                 restControllers = arrayOf(
-                        HealthProbesRestService()
+                        ProbesRestService()
                 )
         )
         addShutdownHook(webServer)
@@ -24,6 +24,9 @@ object Application {
     internal fun addShutdownHook(webService: WebServer) {
         Runtime.getRuntime().addShutdownHook(Thread {
             try {
+                System.out.println("********************************************")
+                System.out.println("********    Stopping web service    ********")
+                System.out.println("********************************************")
                 webService.stop()
             } catch (e: Exception) {
                 // ignored

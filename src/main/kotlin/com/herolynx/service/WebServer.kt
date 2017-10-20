@@ -1,7 +1,6 @@
 package com.herolynx.service
 
 import com.herolynx.service.conversions.ObjectMapperProvider
-import com.herolynx.service.monitoring.HealthProbesRestService
 import com.herolynx.service.monitoring.info
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.ServletContextHandler
@@ -32,7 +31,7 @@ internal class WebServer {
         jerseyServletHolder.initOrder = 0
 
         val jerseyServletParams = mutableMapOf<String, String>()
-        jerseyServletParams.put("jersey.config.server.provider.packages", HealthProbesRestService::class.java.`package`.name)
+        jerseyServletParams.put("jersey.config.server.provider.packages", javaClass.`package`.name)
 
         jerseyServletHolder.initParameters = jerseyServletParams
 

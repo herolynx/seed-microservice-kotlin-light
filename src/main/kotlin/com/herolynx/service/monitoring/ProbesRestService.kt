@@ -4,7 +4,7 @@ import javax.ws.rs.Path
 import javax.ws.rs.GET
 
 @Path("probes")
-class HealthProbesRestService {
+class ProbesRestService {
 
     @GET
     @Path("/health")
