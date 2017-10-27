@@ -53,16 +53,10 @@ dependencies {
     //web service & REST
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
 
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.7.v20170914'
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.7.v20170914'
-
-    compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.26'
-    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.26'
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.26'
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.26'
-    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-http', version: '2.26'
-    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.26'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-netty-http', version: '2.26'
     compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.26'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.26'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.26'
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.2'
     compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.2'
