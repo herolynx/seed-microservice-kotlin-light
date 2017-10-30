@@ -1,4 +1,4 @@
-package com.herolynx.service
+package com.herolynx.service.server
 
 import com.herolynx.service.conversions.ObjectMapperProvider
 import com.herolynx.service.monitoring.info
@@ -9,18 +9,17 @@ import org.glassfish.jersey.jackson.JacksonFeature
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
 
-internal class WebServer {
+class WebServer {
 
     private var jettyServer: Server? = null
 
     @Throws(Exception::class)
-    fun start(port: Int = 8080) {
-        val pkgName = javaClass.`package`.name;
-        info("Starting web server - port: $port, root package: $pkgName")
+    fun start(rootPkgName: String, port: Int = 8080) {
+        info("Starting web server - port: $port, root package: $rootPkgName")
         val serverConfig = ResourceConfig()
                 .register(JacksonFeature::class.java)
                 .register(ObjectMapperProvider::class.java)
-                .packages(pkgName)
+                .packages(rootPkgName)
         val servletHolder = createServletHolder(serverConfig)
         jettyServer = startServer(servletHolder, port)
     }

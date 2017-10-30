@@ -1,6 +1,6 @@
 package com.herolynx.service
 
-import com.herolynx.service.monitoring.ProbesRestService
+import com.herolynx.service.server.WebServer
 
 object Application {
 
@@ -16,7 +16,8 @@ object Application {
         consoleOut("Starting web service")
         val webServer = WebServer()
         val port = 8080
-        webServer.start(port = port)
+        val pkgName = javaClass.`package`.name;
+        webServer.start(rootPkgName = pkgName, port = port)
         addShutdownHook(webServer)
     }
 
