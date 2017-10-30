@@ -1,10 +1,11 @@
 package com.herolynx.service.monitoring
 
-import org.apache.log4j.Logger
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 private fun <T> logger(t: T): Logger {
     val o = t as Any
-    return Logger.getLogger(o.javaClass.simpleName)
+    return LoggerFactory.getLogger(o.javaClass)
 }
 
 fun <T> T.debug(msg: String) {

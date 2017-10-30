@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="logging.level.root" level="ERROR"/>
+    <logger name="logging.level.root" level="INFO"/>
     <logger name="com.herolynx.service" level="INFO"/>
 
     <root level="INFO">

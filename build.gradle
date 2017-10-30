@@ -47,8 +47,9 @@ dependencies {
     compile("org.funktionale:funktionale-all:1.1")
 
     //monitoring
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     //web service & REST
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
