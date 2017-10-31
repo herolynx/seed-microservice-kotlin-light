@@ -1,6 +1,10 @@
 package com.herolynx.service
 
 import com.herolynx.service.server.WebServer
+import org.funktionale.option.Option
+import org.funktionale.option.getOrElse
+import org.funktionale.option.toOption
+import java.io.File
 
 object Application {
 
@@ -13,7 +17,9 @@ object Application {
     @Throws(Exception::class)
     @JvmStatic
     fun main(args: Array<String>) {
-        consoleOut("Starting web service")
+        val configFile = System.getProperty("config.file", "./application.conf").toOption().map { path -> File(path) }
+        consoleOut("Starting web service - config file: $configFile")
+        ConfigLoader.init(configFile)
         val webServer = WebServer()
         val port = 8080
         val pkgName = javaClass.`package`.name;

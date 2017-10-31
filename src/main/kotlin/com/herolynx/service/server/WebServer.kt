@@ -43,7 +43,7 @@ class WebServer {
 
     @Throws(Exception::class)
     fun stop() {
-        info("Stoppping web server")
+        info("Stopping web server")
         jettyServer?.stop()
     }
 
